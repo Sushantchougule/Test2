@@ -9,14 +9,20 @@ const createTask = async (data) => {
         throw err;
     }
 
-    const existingTask = await Task.findOne({ name: data.name })
+    const existingTask = await Task.findOne({ name: data.name, })
     if (existingTask) {
         const err = new Error("Task already Exists");
         err.statusCode = 400;
         throw err;
     }
-    const newTask = await Task.create({ name: data.name,project:existingProject._id});
+    const newTask = await Task.create({ name: data.name,project:existingProject._id,priority:data.priority,assignedTo:data.userId});
     return newTask;
 }
 
-module.exports={createTask}
+const findAllTask=async(filters)=>{
+   
+    const tasks=await Task.find(filters);
+    return tasks;
+}
+
+module.exports={createTask,findAllTask}

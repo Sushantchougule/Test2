@@ -12,7 +12,8 @@ const createUser = async (data) => {
         err.statusCode = 400;
         throw err;
     }
-    const newUser = await User.create({ email: data.email, password: hashedPassword });
+    const role=data.role?data.role:'user';
+    const newUser = await User.create({ email: data.email, password: hashedPassword,role:role });
     return newUser;
 }
 
